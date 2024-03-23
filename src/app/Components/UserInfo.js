@@ -1,6 +1,6 @@
 "use client"
 import React,{useState} from "react"
-import { signIn } from "next-auth/react"
+import { signIn,useSession } from "next-auth/react"
 import { Button } from "@/components/ui/button"
 import { GitHubLogoIcon } from '@radix-ui/react-icons'
 import axios from "axios"
@@ -15,15 +15,10 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+
 
 export function UserInfo() {
+  
     const screen = 1;
     const [currentScreen, setCurrentScreen] = useState(screen);
     const [UserInfo, setUserInfo] = useState({name:"",projectName:"",projectDescription:"",projectLinks:"",skills:"",socials:"",technology:""});
@@ -36,6 +31,7 @@ export function UserInfo() {
     const handleSubmit = async(e) => {
         e.preventDefault();
         await axios.post("http://localhost:3000/api",UserInfo);
+        nextScreen();
     }
 
     const nextScreen = () => {
@@ -49,7 +45,7 @@ export function UserInfo() {
   return (
     <>
    
-    {/* {currentScreen === 1 && (<Card className="w-[350px] bg-[#09090b]   border-[#27272a] m-auto mt-20 rounded-xl">
+    {currentScreen === 1 && (<Card className="w-[350px] bg-[#09090b]   border-[#27272a] m-auto mt-20 rounded-xl">
       <CardHeader>
         <CardTitle className="text-[#fafafa]">Basic Details</CardTitle>
         <CardDescription className="text-[#96969f]">Enter your details.</CardDescription>
@@ -58,8 +54,8 @@ export function UserInfo() {
         <form>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="name" className="text-[#fafafa]">Username</Label>
-              <Input id="name" placeholder="Joe de bruin" name="name" value={UserInfo.name} onChange={handleChange} className="text-[#96969f] bg-transparent border-[#27272a] rounded-xl" />
+              <Label htmlFor="name" className="text-[#fafafa]">Github Username</Label>
+              <Input id="name" placeholder="ALEXANDER11" name="name" value={UserInfo.name} onChange={handleChange} className="text-[#96969f] bg-transparent border-[#27272a] rounded-xl" />
             </div>
           </div>
         </form>
@@ -108,13 +104,13 @@ export function UserInfo() {
     </CardContent>
     <CardFooter className="flex justify-between">
     <Button variant="outline" className="text-[#fafafa] bg-transparent rounded-xl hover:bg-white" onClick={previousScreen}>Previos</Button>
-      <Button className="bg-white text-black hover:bg-slate-50 rounded-xl" onClick={handleSubmit}>Submit</Button>
+      <Button className="bg-white text-black hover:bg-slate-50 rounded-xl" onClick={handleSubmit}>Next</Button>
     </CardFooter>
   </Card>
-    )} */}
+    )}
 
 
-{currentScreen === 1 && (
+{currentScreen === 3 && (
  <Card className="w-[350px] bg-[#09090b]  border-[#27272a] m-auto mt-20 rounded-xl">
     <CardHeader>
       <CardTitle className="text-[#fafafa]">Authentication</CardTitle>
